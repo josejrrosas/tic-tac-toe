@@ -40,4 +40,25 @@ function Player(name, marker) {
 
 // ------------------------------------------------------
 
-const GameController = (function () {})();
+const GameController = (function () {
+  // startGame(): Initializes the players and sets starting turn
+  let Player1;
+  let player2;
+  let currentPlayer;
+  function startGame(name1,name2, marker1, marker2) {
+    const player1 = Player(name1, marker1);
+    const player2 = Player(name2, marker2);
+    const currentPlayer = player1;
+
+    Gameboard.resetBoard();
+  }
+  // playRound(index): Processes a move at index
+
+  // checkWinner(): Checks if the current player has won
+
+  // switchTurn(): Changes the active player
+
+  // getCurrentPlayer(): Returns who’s turn it is
+
+  // resetGame(): Resets game and board
+})();
