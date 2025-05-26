@@ -7,7 +7,7 @@ const Gameboard = (function () {
   // A shallow copy creates a new array with the same primitive values (like strings).
   // This supports encapsulation — prevents direct modification from outside
   function getBoard() {
-    return [...board];
+    return [...board]; //a copy
   }
 
   // Places a marker ("X" or "O") at the given index if it's empty
@@ -33,11 +33,11 @@ const Gameboard = (function () {
 })();
 
 // ---------------------------------------------------------
-function player() {
-  //   const discordName = "@" + name;
-  //   return { name, discordName };
+//Create Player Factory
+function Player(name, marker) {
+  return { name, marker };
 }
 
 // ------------------------------------------------------
 
-const gameController = (function () {})();
+const GameController = (function () {})();
