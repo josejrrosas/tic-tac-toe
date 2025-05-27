@@ -2,6 +2,17 @@
 // Used here to encapsulate the game board logic — keeps board and helper functions private
 const Gameboard = (function () {
   let board = ["", "", "", "", "", "", "", "", ""]; // Private empty board array
+  // render board to html
+  const render = () => {
+    let boardHTML ="";
+    board.forEach((cell,index) => {
+      boardHTML += `<div class = "cell" id="cell-${index}">${cell}</div>`
+    })
+    document.querySelector("#game-board").innerHTML = boardHTML;
+  }
+
+
+
 
   // Returns a shallow copy of the board
   // A shallow copy creates a new array with the same primitive values (like strings).
@@ -30,6 +41,7 @@ const Gameboard = (function () {
     getBoard,
     markCell,
     resetBoard,
+    render
   };
 })();
 
@@ -50,8 +62,9 @@ const GameController = (function () {
     player1 = Player(name1, marker1);
     player2 = Player(name2, marker2);
     currentPlayer = player1;
-    console.log("Game Started.")
     Gameboard.resetBoard();
+    console.log("Game Started.")
+    Gameboard.render();
   }
 
   function switchTurn() {
