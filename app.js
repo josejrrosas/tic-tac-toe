@@ -55,17 +55,20 @@ const GameController = (function () {
 
   // playRound(index): Processes a move at index
 function playRound(index) {
+    //checks to see if move is valid 
     if (Gameboard.markCell(index, currentPlayer.marker) === false){
         return 'Invalid Move' ;
     }
-
+    //if move is valid check to see if it was a winning move 
     const result = checkWinner();
     if(result === 'win'){
          return `${currentPlayer.name} wins!`;
     }
+    //check to see if valid move was atie 
     else if (result === 'tie'){
         return 'It’s a tie!';
     }
+    //if not an end gaming move, go to next turn 
     else{
         switchTurn()
         return 'Next turn';
