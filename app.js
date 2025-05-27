@@ -116,7 +116,20 @@ const GameController = (function () {
     }
   }
 
-  // getCurrentPlayer(): Returns who’s turn it is
+  function getCurrentPlayer() {
+    return currentPlayer;
+  }
 
-  // resetGame(): Resets game and board
+  function resetGame() {
+    Gameboard.resetBoard();
+    currentPlayer = player1;
+  }
+  
+  return {
+    startGame,
+    playRound,
+    getCurrentPlayer,
+    resetGame
+  };
+  
 })();
