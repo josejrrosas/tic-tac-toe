@@ -54,50 +54,67 @@ const GameController = (function () {
   }
 
   // playRound(index): Processes a move at index
-function playRound(index) {
-    //checks to see if move is valid 
-    if (Gameboard.markCell(index, currentPlayer.marker) === false){
-        return 'Invalid Move' ;
+  function playRound(index) {
+    //checks to see if move is valid
+    if (Gameboard.markCell(index, currentPlayer.marker) === false) {
+      return "Invalid Move";
     }
-    //if move is valid check to see if it was a winning move 
+    //if move is valid check to see if it was a winning move
     const result = checkWinner();
-    if(result === 'win'){
-         return `${currentPlayer.name} wins!`;
+    if (result === "win") {
+      return `${currentPlayer.name} wins!`;
     }
-    //check to see if valid move was atie 
-    else if (result === 'tie'){
-        return 'It’s a tie!';
+    //check to see if valid move was atie
+    else if (result === "tie") {
+      return "It’s a tie!";
     }
-    //if not an end gaming move, go to next turn 
-    else{
-        switchTurn()
-        return 'Next turn';
+    //if not an end gaming move, go to next turn
+    else {
+      switchTurn();
+      return "Next turn";
     }
-}
+
+    function switchTurn() {
+      if (currentPlayer === player1) {
+        currentPlayer = player2;
+      } else {
+        currentPlayer = player1;
+      }
+    }
+    
+  }
 
   // checkWinner(): Checks if the current player has won
-let winCombo = [[0,1,2], [3,4,5], [6,7,8],[0,3,6], [1,4,7], [2,5,8],[0,4,8], [2,4,6]]
-function checkWinner() {
-  const board = Gameboard.getBoard();
-  const marker = currentPlayer.marker;
+  let winCombo = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  function checkWinner() {
+    const board = Gameboard.getBoard();
+    const marker = currentPlayer.marker;
 
-//checks every combo and sees if the matching marker position matches the index in the combo 
-  for (let combo of winCombo) {
-    if (combo.every(index => board[index] === marker)) {
-      return 'win';
+    //checks every combo and sees if the matching marker position matches the index in the combo
+    for (let combo of winCombo) {
+      if (combo.every((index) => board[index] === marker)) {
+        return "win";
+      }
+    }
+
+    // If no win, check for tie
+    if (board.every((cell) => cell !== "")) {
+      return "tie";
+    }
+    else{
+      switchTurn();
+      return "continue";
     }
   }
-
-  // If no win, check for tie
-  if (board.every(cell => cell !== '')) {
-    return 'tie';
-  }
-
-  return 'continue';
-}
-
-
-  // switchTurn(): Changes the active player
 
   // getCurrentPlayer(): Returns who’s turn it is
 
