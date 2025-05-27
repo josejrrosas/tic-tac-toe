@@ -22,6 +22,7 @@ const Gameboard = (function () {
   // Resets the board to all empty strings
   function resetBoard() {
     board = ["", "", "", "", "", "", "", "", ""];
+    console.log("Game board reset.")
   }
 
   //return functions in an object so we can access them outside of Gameboard
@@ -49,7 +50,7 @@ const GameController = (function () {
     player1 = Player(name1, marker1);
     player2 = Player(name2, marker2);
     currentPlayer = player1;
-
+    console.log("Game Started.")
     Gameboard.resetBoard();
   }
 
@@ -118,6 +119,7 @@ const GameController = (function () {
   }
 
   function resetGame() {
+    console.log("Game Restarted.");
     Gameboard.resetBoard();
     currentPlayer = player1;
   }
@@ -130,3 +132,13 @@ const GameController = (function () {
   };
 })();
 
+// ------------------------------------------------------
+const startButton = document.querySelector('#start-button');
+startButton.addEventListener('click', () => {
+  GameController.startGame();
+})
+
+const restartButton = document.querySelector('#restart-button');
+restartButton.addEventListener('click', () => {
+  GameController.resetGame();
+})

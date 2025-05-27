@@ -33,7 +33,12 @@ body {
   font-size: 1.2em;
 }
 
-#restart-button {
+#restart-button, #start-button {
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+input{
   padding: 10px 20px;
   font-size: 1em;
 }
