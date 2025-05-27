@@ -41,48 +41,47 @@ function Player(name, marker) {
 // ------------------------------------------------------
 
 const GameController = (function () {
-  let Player1;
+  let player1;
   let player2;
   let currentPlayer;
   // startGame(): Initializes the players and sets starting turn
   function startGame(name1, name2, marker1, marker2) {
-    const player1 = Player(name1, marker1);
-    const player2 = Player(name2, marker2);
-    const currentPlayer = player1;
+    player1 = Player(name1, marker1);
+    player2 = Player(name2, marker2);
+    currentPlayer = player1;
 
     Gameboard.resetBoard();
   }
 
-  // playRound(index): Processes a move at index
-  function playRound(index) {
-    //checks to see if move is valid
-    if (Gameboard.markCell(index, currentPlayer.marker) === false) {
-      return "Invalid Move";
+  function switchTurn() {
+    if (currentPlayer === player1) {
+      currentPlayer = player2;
+    } else {
+      currentPlayer = player1;
     }
-    //if move is valid check to see if it was a winning move
-    const result = checkWinner();
-    if (result === "win") {
-      return `${currentPlayer.name} wins!`;
-    }
-    //check to see if valid move was atie
-    else if (result === "tie") {
-      return "It’s a tie!";
-    }
-    //if not an end gaming move, go to next turn
-    else {
-      switchTurn();
-      return "Next turn";
-    }
+  }
 
-    function switchTurn() {
-      if (currentPlayer === player1) {
-        currentPlayer = player2;
-      } else {
-        currentPlayer = player1;
+    // playRound(index): Processes a move at index
+    function playRound(index) {
+      //checks to see if move is valid
+      if (Gameboard.markCell(index, currentPlayer.marker) === false) {
+        return "Invalid Move";
+      }
+      //if move is valid check to see if it was a winning move
+      const result = checkWinner();
+      if (result === "win") {
+        return `${currentPlayer.name} wins!`;
+      }
+      //check to see if valid move was atie
+      else if (result === "tie") {
+        return "It’s a tie!";
+      }
+      //if not an end gaming move, go to next turn
+      else {
+        switchTurn();
+        return "Next turn";
       }
     }
-    
-  }
 
   // checkWinner(): Checks if the current player has won
   let winCombo = [
@@ -109,9 +108,7 @@ const GameController = (function () {
     // If no win, check for tie
     if (board.every((cell) => cell !== "")) {
       return "tie";
-    }
-    else{
-      switchTurn();
+    } else {
       return "continue";
     }
   }
@@ -124,12 +121,11 @@ const GameController = (function () {
     Gameboard.resetBoard();
     currentPlayer = player1;
   }
-  
+
   return {
     startGame,
     playRound,
     getCurrentPlayer,
-    resetGame
+    resetGame,
   };
-  
 })();
