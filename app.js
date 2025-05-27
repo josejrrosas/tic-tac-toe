@@ -76,6 +76,25 @@ function playRound(index) {
 }
 
   // checkWinner(): Checks if the current player has won
+let winCombo = [[0,1,2], [3,4,5], [6,7,8],[0,3,6], [1,4,7], [2,5,8],[0,4,8], [2,4,6]]
+function checkWinner() {
+  const board = Gameboard.getBoard();
+  const marker = currentPlayer.marker;
+
+//checks every combo and sees if the matching marker position matches the index in the combo 
+  for (let combo of winCombo) {
+    if (combo.every(index => board[index] === marker)) {
+      return 'win';
+    }
+  }
+
+  // If no win, check for tie
+  if (board.every(cell => cell !== '')) {
+    return 'tie';
+  }
+
+  return 'continue';
+}
 
 
   // switchTurn(): Changes the active player
