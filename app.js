@@ -4,15 +4,21 @@ const Gameboard = (function () {
   let board = ["", "", "", "", "", "", "", "", ""]; // Private empty board array
   // render board to html
   const render = () => {
-    let boardHTML ="";
-    board.forEach((cell,index) => {
-      boardHTML += `<div class = "cell" id="cell-${index}">${cell}</div>`
-    })
+    let boardHTML = "";
+    board.forEach((cell, index) => {
+      boardHTML += `<div class = "cell" id="cell-${index}">${cell}</div>`;
+    });
     document.querySelector("#game-board").innerHTML = boardHTML;
-  }
-
-
-
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      //grabs id from cell and splits the id to get the index 
+      const index = parseInt(cell.id.split("-")[1]);
+      cell.addEventListener("click", () => {
+        GameController.playRound(index);
+        Gameboard.render();
+      });
+    });
+  };
 
   // Returns a shallow copy of the board
   // A shallow copy creates a new array with the same primitive values (like strings).
@@ -33,7 +39,7 @@ const Gameboard = (function () {
   // Resets the board to all empty strings
   function resetBoard() {
     board = ["", "", "", "", "", "", "", "", ""];
-    console.log("Game board reset.")
+    console.log("Game board reset.");
   }
 
   //return functions in an object so we can access them outside of Gameboard
@@ -41,7 +47,7 @@ const Gameboard = (function () {
     getBoard,
     markCell,
     resetBoard,
-    render
+    render,
   };
 })();
 
@@ -63,7 +69,7 @@ const GameController = (function () {
     player2 = Player(name2, marker2);
     currentPlayer = player1;
     Gameboard.resetBoard();
-    console.log("Game Started.")
+    console.log("Game Started.");
     Gameboard.render();
   }
 
@@ -75,27 +81,27 @@ const GameController = (function () {
     }
   }
 
-    // playRound(index): Processes a move at index
-    function playRound(index) {
-      //checks to see if move is valid
-      if (Gameboard.markCell(index, currentPlayer.marker) === false) {
-        return "Invalid Move";
-      }
-      //if move is valid check to see if it was a winning move
-      const result = checkWinner();
-      if (result === "win") {
-        return `${currentPlayer.name} wins!`;
-      }
-      //check to see if valid move was atie
-      else if (result === "tie") {
-        return "It’s a tie!";
-      }
-      //if not an end gaming move, go to next turn
-      else {
-        switchTurn();
-        return "Next turn";
-      }
+  // playRound(index): Processes a move at index
+  function playRound(index) {
+    //checks to see if move is valid
+    if (Gameboard.markCell(index, currentPlayer.marker) === false) {
+      return "Invalid Move";
     }
+    //if move is valid check to see if it was a winning move
+    const result = checkWinner();
+    if (result === "win") {
+      return `${currentPlayer.name} wins!`;
+    }
+    //check to see if valid move was atie
+    else if (result === "tie") {
+      return "It’s a tie!";
+    }
+    //if not an end gaming move, go to next turn
+    else {
+      switchTurn();
+      return "Next turn";
+    }
+  }
 
   // checkWinner(): Checks if the current player has won
   let winCombo = [
@@ -146,12 +152,12 @@ const GameController = (function () {
 })();
 
 // ------------------------------------------------------
-const startButton = document.querySelector('#start-button');
-startButton.addEventListener('click', () => {
+const startButton = document.querySelector("#start-button");
+startButton.addEventListener("click", () => {
   GameController.startGame();
-})
+});
 
-const restartButton = document.querySelector('#restart-button');
-restartButton.addEventListener('click', () => {
+const restartButton = document.querySelector("#restart-button");
+restartButton.addEventListener("click", () => {
   GameController.resetGame();
-})
+});
