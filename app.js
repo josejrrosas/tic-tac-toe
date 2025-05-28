@@ -88,6 +88,7 @@ const GameController = (function () {
   function playRound(index) {
     //checks to see if move is valid
     if (Gameboard.markCell(index, currentPlayer.marker) === false) {
+      DisplayController.setMessage("Invalid Move! Try again " + currentPlayer.name + "!");
       return "Invalid Move";
     }
     //if move is valid check to see if it was a winning move
